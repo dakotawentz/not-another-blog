@@ -4,20 +4,32 @@ const sequelize = require('../config/connection');
 class Posts extends Model {}
 
 const Posts = sequelize.define('Post', {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    contents: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+        model: "user",
+        key: "id",
+        },
+    },
   },
-  contents: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-},
-{
+  {
     sequelize,
     timestamps: false,
     freezeTableName: true,
